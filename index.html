@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="
+https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKNIBJecwklaUzsRDKneXvxoAKvlsrqwGWwzShl4Jxeg&s=10
+">
+<title>Gửi em bé của anh</title>
+
+<style>
+/* ===== CHỈNH KÍCH THƯỚC TẠI ĐÂY ===== */
+:root {
+  --envelope-width: min(86vw, 420px);
+  --envelope-height: calc(var(--envelope-width) * 0.65);
+  --letter-width: 90%;
+  --letter-height: 340px;
+  --bg: #fff0f3;
+  --pink: #d87589;
+  --paper: #fffaf3;
+  --text: #57434a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 12px;
+  background: var(--bg);
+  font-family: "Segoe UI", sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+}
+
+h1 {
+  font-size: clamp(20px, 5vw, 30px);
+  text-align: center;
+  margin: 0;
+  color: #bd6278;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  margin: -22px 0 0;
+  opacity: .75;
+}
+
+/* Phong bì */
+.envelope {
+  position: relative;
+  width: var(--envelope-width);
+  height: var(--envelope-height);
+  max-width: 420px;
+  background: #f7e6d8;
+  border-radius: 5px 5px 12px 12px;
+  box-shadow: 0 12px 30px #ad718022;
+  perspective: 1000px;
+}
+
+/* Lá thư */
+.letter {
+  position: absolute;
+  width: 90%;
+  height: 78%;
+  left: 5%;
+  bottom: 4%;
+  padding: 22px 18px;
+
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  background: #fffaf3;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px #0000000c;
+
+  z-index: 2;
+  transition: transform .8s ease, height .5s ease;
+}
+
+/* Ẩn thanh cuộn nhưng vẫn cho phép cuộn */
+.letter::-webkit-scrollbar {
+  display: none;
+}
+
+.letter h2 {
+  font-family: Georgia, serif;
+  font-size: 22px;
+  font-weight: normal;
+  margin: 0 0 18px;
+  color: #bd6278;
+}
+
+.letter p {
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 0 0 14px;
+  overflow-wrap: anywhere;
+}
+
+.signature {
+  text-align: right;
+  margin-top: 20px !important;
+  font-style: italic;
+}
+
+/* Các nếp gấp phong bì */
+.flap {
+  position: absolute;
+  inset: 0;
+  background: #ecc1c7;
+  clip-path: polygon(0 0, 100% 0, 50% 58%);
+  transform-origin: top;
+  transition: transform .65s ease;
+  z-index: 4;
+}
+
+.front {
+  position: absolute;
+  inset: 0;
+  background: #fff6e9;
+  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+  border-radius: 5px 5px 12px 12px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  z-index: 5;
+  top: 51%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+
+/* Nút */
+button {
+  border: none;
+  padding: 14px 35px;
+  border-radius: 50px;
+  background: var(--pink);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 5px 15px #d8758933;
+  transition: transform .2s, background .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  background: #c8667d;
+}
+
+button:active {
+  transform: scale(.97);
+}
+
+/* Trạng thái mở thư */
+.envelope.open .flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope.open .letter {
+  height: min(390px, 58vh);
+  transform: translateY(-30%);
+  z-index: 5;
+}
+
+.envelope.open .heart {
+  opacity: 0;
+}
+
+/* Điện thoại */
+@media (max-width: 480px) {
+  :root {
+    --envelope-width: 88vw;
+    --envelope-height: calc(var(--envelope-width) * 0.68);
+    --letter-height: min(360px, 48vh);
+  }
+
+  body {
+    padding: 20px 8px;
+  }
+
+  .container {
+    gap: 28px;
+  }
+
+  .letter {
+    padding: 18px 14px;
+  }
+
+  .letter h2 {
+    font-size: 19px;
+    margin-bottom: 12px;
+  }
+
+  .letter p {
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  button {
+    padding: 13px 30px;
+    font-size: 15px;
+  }
+
+  .heart {
+    font-size: 27px;
+  }
+}
+
+/* Màn hình rất nhỏ */
+@media (max-width: 350px) {
+  :root {
+    --envelope-width: 92vw;
+    --letter-height: 220px;
+  }
+
+  .letter {
+    padding: 12px 10px;
+  }
+
+  .letter p {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+  }
+}
+@media (max-width: 480px) {
+  .letter {
+    width: 90%;
+    left: 5%;
+    padding: 16px 13px;
+    height: 240px;
+  }
+
+  .envelope.open .letter {
+    height: min(360px, 55dvh);
+    transform: translateY(-28%);
+  }
+
+  .letter h2 {
+    font-size: 18px;
+  }
+
+  .letter p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}
+
+/* Khi thư đang đóng */
+.envelope:not(.open) .letter {
+  height: 78%;
+  bottom: 0;
+  transform: translateY(0);
+}
+
+/* Khi mở thư */
+.envelope.open .letter {
+  height: min(390px, 58vh);
+  bottom: 4%;
+  transform: translateY(-30%);
+  z-index: 5;
+}
+
+@media (max-width: 480px) {
+  .envelope:not(.open) .letter {
+    height: 78%;
+    bottom: 0;
+  }
+
+  .envelope.open .letter {
+    height: min(360px, 55dvh);
+    bottom: 4%;
+    transform: translateY(-28%);
+  }
+}
+
+.photo-rain {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.photo-drop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(68vw, 300px);
+  max-height: 72vh;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  padding: 5px 5px 16px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 8px 24px #39242a44;
+  opacity: 0;
+  animation: photo-zoom var(--duration) ease-in-out var(--delay) both;
+}
+
+@keyframes photo-zoom {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--rotation)) scale(.15);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1.04);
+  }
+  72% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-drop { animation: none; }
+}
+
+</style>
+</head>
+
+<body>
+<main class="container">
+
+  <h1>Gửi em bé của anh, Phan Ánh Tuyết 💗</h1>
+  <p class="subtitle">Đây là chút tâm tư anh muốn gửi tới em</p>
+
+  <div class="envelope" id="envelope">
+
+    <article class="letter" id="letter">
+      <!-- ===== SỬA NỘI DUNG LÁ THƯ TẠI ĐÂY ===== -->
+      <h2>Gửi em, 💌</h2>
+
+      <p>
+        Anh đã suy nghĩ rất nhiều, làm rất nhiều thứ, đi qua những cảm xúc khác nhau để có thể viết cho em những dòng này...
+        Có lẽ anh đã không làm tốt với cương vị là người yêu em,
+        anh biết bản thân anh rất đỗi vụng về trong việc đem tình yêu của mình đến em.
+        Nhưng anh viết bức thư này, muốn gửi tới em, để có thể mong em phần nào nguôi đi những uất ức tủi thân do dp gây ra.
+      </p>
+
+      <p>
+        Anh và em đã bên nhau 1 năm 9 tháng, em có nhớ những ngày tháng này của năm ấy không,
+        là khi mà anh và em, chúng ta vẫn đang chưa từng biết đến nhau, sống một cuộc sống của riêng hai người,
+        là khi mà anh vô tình gặp em, gặp được em bé, và đem lòng thương nhớ em, bất chợt nảy sinh cảm giác muốn ở bên em, bên con người này, và , anh đã được đi bên em bé của anh, anh rất hạnh phúc vì điều đó.
+      </p>
+
+      <p>
+        Đã từng có rất nhiều lần, được thấy em ở trong vòng tay anh, được ôm hôn và được nắm đôi bàn tay bé xinh của em, được nếm hương tóc thoảng qua nhưng mềm và thơm ấy.
+        Chỉ cần nghĩ đến những điều ấy, trong lòng anh rất hạnh phúc, được thấy em vẫn ở đây và đi cùng anh, được thấy em bé yêu để anh có thể dịu dàng, đồng hành và che chở cho em.
+      </p>
+
+      <p>
+        Anh vui lắm, khi được đi về cùng em, được thấy em trước khi ngủ và mỗi sáng thức dậy,
+        được yêu em, đồng hành cùng em cả trong những thói quen hằng ngày. Được nghe câu "Yêu oiii", "Về với emmm",... ,dp rất vui luôn vì đã được làm dp của em bé. Dp cảm ơn em bé nhiều:3
+      </p>
+
+      <p>
+        Anh biết em bé đã cố gắng rất rất nhiều trong mối quan hệ này, để ổn định với anh, với em và với cuộc sống cả hai.
+        Em cũng đã từng mong chúng ta được yên bình đồng hành cùng nhau, cũng mong muốn được đi cùng dp nhiều hơn trên con đường của em, anh biết điều đó.
+        Suy cho cùng thì anh đã là người sai, vì những sự thiếu xót, sự chậm trễ trong việc đưa em an lòng và thấu hiểu em từ anh, nên mới đẩy em bé ra xa dần hơn.
+        Anh mất em bé của anh rồi, anh và em, suy cho cùng, thì đều không  ai muốn  chuyện  nó thành ra như này, sau cùng thì dp cảm ơn em và xin lỗi em vì những gì tệ hại dp đã đem đến cho em, dù anh đã có thể làm tốt hơn như thế để chuyện nó không đi đến bước đường này.
+      </p>
+      
+      <p>
+        Anh vẫn ở đây, yêu em bé, chờ em bé về, thương em thêm lần nữa và đồng hành cùng em thêm lần nữa.
+        Anh mong cuộc sống của em dù như nào cũng sẽ vui vẻ hạnh phúc như những gì em mong muốn, vì em xứng đáng đạt được điều đó, bằng tất cả sự cố gắng mà ít ai thấy được của em bé mà.
+        Nếu em có một ngày tồi tệ, anh vẫn ở đây, chờ em bé về và ôm em vào lòng, nhé!
+        Yêu em, yêu cả những gì đã từng ở đó, và những gì chẳng còn ở trong vòng tay anh.
+      </p>
+
+      <p>
+        Nhớ em bé của anh nhiều, nhớ lắm, yêu lắm, nhớ quá trời huhu T.T
+        Ngủ ngon nhaaa,Yêu em!
+      </p>
+
+      <p class="signature">
+        Thân gửi,<br>
+        <strong>Nguyễn Hữu Duy Phong, anh bé của em 💗</strong>
+      </p>
+
+      <!-- ===== KẾT THÚC NỘI DUNG THƯ ===== -->
+    </article>
+
+    <div class="flap"></div>
+    <div class="front"></div>
+    <div class="heart">♥</div>
+
+  </div>
+
+  <button id="toggleBtn" type="button" aria-expanded="false">
+    💌 Mở thư
+  </button>
+
+</main>
+
+<div class="photo-rain" id="photoRain" aria-hidden="true"></div>
+
+<script>
+const envelope = document.getElementById("envelope");
+const toggleBtn = document.getElementById("toggleBtn");
+const photoRain = document.getElementById("photoRain");
+const photos = [
+  "image/1790881489118_141234999230080550_3611721555178782668_1d3146426c3b3a74353f749d99bc83dd.jpg",
+  "image/1790881489103_141234999230080550_3611721555178782668_eba8dd493673119e5074960508f4543d.jpg",
+  "image/1790881489082_141234999230080550_3611721555178782668_0fb7689c4e7170db6ce5b9a807e8ba38.jpg",
+  "image/1790881489051_141234999230080550_3611721555178782668_5c55f561e05b7ca88993c8ea5e4fd227.jpg"
+];
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let isOpen = false;
+let isAnimating = false;
+
+function setEnvelopeOpen(open) {
+  isOpen = open;
+  envelope.classList.toggle("open", isOpen);
+  toggleBtn.textContent = isOpen ? "💗 Gấp thư lại" : "💌 Mở thư";
+  toggleBtn.setAttribute("aria-expanded", String(isOpen));
+}
+
+function showFallingPhotos() {
+  const photoDurationMs = 850;
+  const photoGapMs = 900;
+  const rotations = [-5, 4, -3, 6];
+
+  photoRain.replaceChildren();
+  photos.forEach((src, index) => {
+    const photo = document.createElement("img");
+    photo.className = "photo-drop";
+    photo.src = src;
+    photo.alt = "";
+    photo.style.setProperty("--duration", `${photoDurationMs}ms`);
+    photo.style.setProperty("--delay", `${index * photoGapMs}ms`);
+    photo.style.setProperty("--rotation", `${rotations[index]}deg`);
+    photoRain.append(photo);
+  });
+
+  return photoGapMs * (photos.length - 1) + photoDurationMs + 100;
+}
+
+toggleBtn.addEventListener("click", () => {
+  if (isAnimating) return;
+
+  if (isOpen) {
+    setEnvelopeOpen(false);
+    return;
+  }
+
+  if (prefersReducedMotion) {
+    setEnvelopeOpen(true);
+    return;
+  }
+
+  isAnimating = true;
+  toggleBtn.disabled = true;
+  toggleBtn.textContent = "💗 Kỷ niệm của chúng mình...";
+  const sequenceDuration = showFallingPhotos();
+
+  window.setTimeout(() => {
+    photoRain.replaceChildren();
+    setEnvelopeOpen(true);
+    toggleBtn.disabled = false;
+    isAnimating = false;
+  }, sequenceDuration);
+});
+</script>
+
+</body>
+</html>

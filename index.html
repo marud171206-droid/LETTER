@@ -346,10 +346,6 @@ button:active {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .photo-drop { animation: none; }
-}
-
 </style>
 </head>
 
@@ -439,8 +435,6 @@ const photos = [
   "image/1790881489082_141234999230080550_3611721555178782668_0fb7689c4e7170db6ce5b9a807e8ba38.jpg",
   "image/1790881489051_141234999230080550_3611721555178782668_5c55f561e05b7ca88993c8ea5e4fd227.jpg"
 ];
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
 let isOpen = false;
 let isAnimating = false;
 
@@ -476,11 +470,6 @@ toggleBtn.addEventListener("click", () => {
 
   if (isOpen) {
     setEnvelopeOpen(false);
-    return;
-  }
-
-  if (prefersReducedMotion) {
-    setEnvelopeOpen(true);
     return;
   }
 
